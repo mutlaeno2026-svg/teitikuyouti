@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Noto Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-primary: #1A535C;
+  --color-accent: #FF6B6B;
+  --color-teal-light: #4ECDC4;
+  --color-bento-bg: #F7FFF7;
+  --color-page-bg: #E0E7E9;
+  --color-bento-text: #2D3436;
+  --color-bento-gray: #636E72;
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased text-bento-text bg-page-bg;
+  }
+}
+
+@layer utilities {
+  .bento-container {
+    @apply w-full max-w-[980px] min-h-screen md:min-h-[720px] bg-white rounded-xl shadow-2xl p-4 md:p-6 grid gap-3 mx-auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  @media (min-width: 768px) {
+    .bento-container {
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: auto 1fr auto;
+    }
+  }
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    overflow: hidden !important;
+    background: white !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .bento-container {
+    width: 297mm !important;
+    height: 210mm !important;
+    min-height: 210mm !important;
+    max-height: 210mm !important;
+    padding: 8mm !important; /* 少し余裕を持たせる */
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+    overflow: hidden !important;
+    display: grid !important;
+    /* 印刷時は常にデスクトップレイアウトを強制 */
+    grid-template-columns: 2fr 1fr !important;
+    grid-template-rows: auto 1fr auto !important;
+    gap: 3mm !important;
+  }
+  /* 外側のコンテナの余白を消去 */
+  div:has(> .bento-container), 
+  #root > div {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    min-height: 0 !important;
+    background: transparent !important;
+  }
+}
